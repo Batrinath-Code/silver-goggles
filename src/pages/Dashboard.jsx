@@ -36,7 +36,7 @@ function Dashboard({curentValue}) {
   const navigate = useNavigate();
   const numberofID =[15, 20, 16, 18];
   
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const [selectedChart, setSelectedChart] = useState("bloodPressure");
 
@@ -66,10 +66,15 @@ function Dashboard({curentValue}) {
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               {/* Left: Title */}
-              <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
-                  Patient Report
-                </h1>
+              <div className="flex justify-between items-center mb-4   w-full">
+                <h3 className="text-2xl md:text-2xl text-gray-800 dark:text-gray-100 font-bold">
+                  Smart Room 101 - Marry Queen Schedule
+                </h3>
+                <h3 className="text-2xl md:text-2xl text-gray-800 dark:text-gray-100 font-bold">
+                  Diagnoses : Dengu Fever
+                  <br />
+                  Date Of Admitted : 12/Mar/2025
+                </h3>
               </div>
 
               {/* Right: Actions */}

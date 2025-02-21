@@ -69,7 +69,7 @@ function Sidebar({
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex lg:flex! flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:w-64! shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
+        className={`flex lg:flex! flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-48 lg:sidebar-expanded:!w-64 2xl:w-64! shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-64"
         } ${
           variant === "v2"
@@ -125,8 +125,7 @@ function Sidebar({
                   className="mt-4 shadow-xl rounded-full w-1/2 h-auto  border-2 border-gray-400"
                 />
                 <ul className=" ">
-                  <li className=" my-1 mt-4">Name: {profile.name}</li>
-                  <li className=" my-1 mt-4">Age: {profile.age}</li>
+                
                   <li className=" my-1 mt-4">Blood : {profile.blood}</li>
                   <li className=" my-1 mt-4">Height : 177cm</li>
                   <li className=" my-1 mt-4">Weight : 96kg</li>

@@ -46,7 +46,7 @@ function TimeTable() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const updatedSchedule = schedule.map((item) => updateScheduleStatus(item));
- const patient = patientData.find((patient) => patient.id === parseInt(id));
+  const patient = patientData.find((patient) => patient.id === parseInt(id));
   useEffect(() => {
     if (!numberofID.includes(parseInt(id))) {
       navigate("/404"); // Redirect to the 404 page if ID is less than 7
@@ -56,7 +56,7 @@ function TimeTable() {
   return (
     <div className="flex h-screen  overflow-hidden">
       {/* Sidebar */}
-      <Sidebar profile={patient} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -68,10 +68,15 @@ function TimeTable() {
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               {/* Left: Title */}
-              <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
-                  Patient Schedule
-                </h1>
+              <div className="flex justify-between items-center mb-4   w-full">
+                <h3 className="text-2xl  text-gray-800 dark:text-gray-100 font-bold">
+                  Smart Room 101 - Marry Queen Schedule
+                </h3>
+                <h3 className="text-2xl  text-gray-800 dark:text-gray-100 font-bold">
+                  Diagnoses : Dengu Fever
+                  <br />
+                  Date Of Admitted : 12/Mar/2025
+                </h3>
               </div>
             </div>
 
@@ -80,21 +85,23 @@ function TimeTable() {
               <div className="col-span-12  flex justify-between p-1 sm:p-0 gap-1 sm:gap-x-0  text-xs text-center sm:text-xs lg:text-xl ">
                 <div className="w-full overflow-x-auto">
                   <div className="border-b border-green-400 w-fit">
-                    <span className="text-sm md:text-xl text-red-500">Select Date :</span>{" "}
+                    <span className="text-sm md:text-xl text-red-500">
+                      Select Date :
+                    </span>{" "}
                     <div className=" inline-block">
                       <DateSelect />
                     </div>
                   </div>
                   <table className="w-full bg-white">
                     <thead>
-                      <tr className="text-sm md:text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                      <tr className="text-sm md:text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                         <th className="px-4 py-3">Time</th>
                         <th className="px-4 py-3"> Activity</th>
                         <th className="px-4 py-3">Status</th>
                         <th className="px-4 py-3">Details</th>
                       </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                       {!updatedSchedule ? (
                         <tr>
                           <td colSpan="4" className="text-center">

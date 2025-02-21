@@ -77,7 +77,7 @@ function MainPage() {
               Diagnoses :
             </span>
             <span className="text-lg text-[#0066FF]">
-              Hypertension, Diabetes
+              High Fever
             </span>
           </div>
           <div className="flex justify-center gap-2">

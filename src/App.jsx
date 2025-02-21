@@ -11,7 +11,7 @@ import './charts/ChartjsConfig';
 
 // Import pages
 import Dashboard from './pages/Dashboard';
-import LandingPage from './pages/LandingPage';
+// import LandingPage from './pages/LandingPage';
 import TimeTable from './pages/TimeTable';
 import NotFoundPage from './pages/404Page';
 import MainPage from './pages/MainPage';
@@ -29,7 +29,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<MainPage />} />
-        <Route exact path="/patient/:id" element={<LandingPage />} />
+        {/* <Route exact path="/patient/:id" element={<LandingPage />} /> */}
         <Route exact path="/progress/:id" element={<Dashboard />} />
         <Route exact path="/schedule/:id" element={<TimeTable />} />
 
