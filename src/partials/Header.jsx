@@ -38,7 +38,7 @@ function Header({
         
 
           </div>
-          <h3 className="mx-auto ">Mezoi</h3>
+          <h3 className="mx-auto text-2xl font-semibold">Mezoi</h3>
 
           {/* Header: Right side */}
           <div className="flex items-center space-x-3">

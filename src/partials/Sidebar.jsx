@@ -4,9 +4,10 @@ import { NavLink, useLocation } from "react-router-dom";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import logo from "../images/android-icon-72x72.png";
 function Sidebar({
+  profile,
   sidebarOpen,
   setSidebarOpen,
-  variant = 'default',
+  variant = "default",
 }) {
   const location = useLocation();
   const { pathname } = location;
@@ -15,13 +16,20 @@ function Sidebar({
   const sidebar = useRef(null);
 
   const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
-  const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === "true");
+  const [sidebarExpanded, setSidebarExpanded] = useState(
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
+  );
 
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!sidebar.current || !trigger.current) return;
-      if (!sidebarOpen || sidebar.current.contains(target) || trigger.current.contains(target)) return;
+      if (
+        !sidebarOpen ||
+        sidebar.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
       setSidebarOpen(false);
     };
     document.addEventListener("click", clickHandler);
@@ -61,7 +69,13 @@ function Sidebar({
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex lg:flex! flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:w-64! shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${sidebarOpen ? "translate-x-0" : "-translate-x-64"} ${variant === 'v2' ? 'border-r border-gray-200 dark:border-gray-700/60' : 'rounded-r-2xl shadow-xs'}`}
+        className={`flex lg:flex! flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:w-64! shrink-0 bg-white dark:bg-gray-800 p-4 transition-all duration-200 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-64"
+        } ${
+          variant === "v2"
+            ? "border-r border-gray-200 dark:border-gray-700/60"
+            : "rounded-r-2xl shadow-xs"
+        }`}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
@@ -74,13 +88,17 @@ function Sidebar({
             aria-expanded={sidebarOpen}
           >
             <span className="sr-only">Close sidebar</span>
-            <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className="w-6 h-6 fill-current"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
             </svg>
           </button>
           {/* Logo */}
           <NavLink end to="/" className="block">
-             <img src={logo} alt="mezoi"  />
+            <img src={logo} alt="mezoi" />
           </NavLink>
         </div>
 
@@ -89,21 +107,53 @@ function Sidebar({
           {/* Pages group */}
           <div>
             <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
-              <span className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6" aria-hidden="true">
+              <span
+                className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+                aria-hidden="true"
+              >
                 •••
               </span>
-              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">Patient Page</span>
+              <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                Patient Page
+              </span>
             </h3>
+            {profile ? (
+              <>
+                <img
+                  alt="welcome"
+                  src="https://placehold.co/200"
+                  className="mt-4 shadow-xl rounded-full w-1/2 h-auto  border-2 border-gray-400"
+                />
+                <ul className=" ">
+                  <li className=" my-1 mt-4">Name: {profile.name}</li>
+                  <li className=" my-1 mt-4">Age: {profile.age}</li>
+                  <li className=" my-1 mt-4">Blood : {profile.blood}</li>
+                  <li className=" my-1 mt-4">Height : 177cm</li>
+                  <li className=" my-1 mt-4">Weight : 96kg</li>
+                  <li className=" my-1 mt-4">Join Date: {"20-02-2025"}</li>
+                  <li className=" my-1 mt-4">Doctor: {"Albert"}</li>
+                  <li className=" my-1 mt-4">Diagnosis: {"Dengu Fever"}</li>
+                </ul>
+              </>
+            ) : (
+              <></>
+            )}
             <ul className="mt-3">
               {/* Dashboard */}
-              <SidebarLinkGroup activecondition={pathname === "/" || pathname.includes("dashboard")}>
+              <SidebarLinkGroup
+                activecondition={
+                  pathname === "/" || pathname.includes("dashboard")
+                }
+              >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <a
                         href="#0"
                         className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                          pathname === "/" || pathname.includes("dashboard") ? "" : "hover:text-gray-900 dark:hover:text-white"
+                          pathname === "/" || pathname.includes("dashboard")
+                            ? ""
+                            : "hover:text-gray-900 dark:hover:text-white"
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -176,20 +226,25 @@ function Sidebar({
                   );
                 }}
               </SidebarLinkGroup>
-          
-       
-       
             </ul>
           </div>
-        
         </div>
 
         {/* Expand / collapse button */}
         <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
           <div className="w-12 pl-4 pr-3 py-2">
-            <button className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400" onClick={() => setSidebarExpanded(!sidebarExpanded)}>
+            <button
+              className="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
+              onClick={() => setSidebarExpanded(!sidebarExpanded)}
+            >
               <span className="sr-only">Expand / collapse sidebar</span>
-              <svg className="shrink-0 fill-current text-gray-400 dark:text-gray-500 sidebar-expanded:rotate-180" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+              <svg
+                className="shrink-0 fill-current text-gray-400 dark:text-gray-500 sidebar-expanded:rotate-180"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+              >
                 <path d="M15 16a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v14a1 1 0 0 1-1 1ZM8.586 7H1a1 1 0 1 0 0 2h7.586l-2.793 2.793a1 1 0 1 0 1.414 1.414l4.5-4.5A.997.997 0 0 0 12 8.01M11.924 7.617a.997.997 0 0 0-.217-.324l-4.5-4.5a1 1 0 0 0-1.414 1.414L8.586 7M12 7.99a.996.996 0 0 0-.076-.373Z" />
               </svg>
             </button>

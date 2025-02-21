@@ -6,6 +6,7 @@ import Header from "../partials/Header";
 import { se } from "date-fns/locale";
 import BloodPressureDashboard from "../partials/dashboard/BloodPressureDashboard";
 import VitalDashboard from "../partials/dashboard/VitalDashboard";
+import { patientData } from "../data/patientdb";
 // Generate realistic sample data for each vital sign
 const generateVitalSignData = (currentReading) => {
   const data = [];
@@ -49,11 +50,11 @@ function Dashboard({curentValue}) {
       }
     }, [id, navigate]);
     
-
+ const patient = patientData.find((patient) => patient.id === parseInt(id));
   return (
     <div className="flex h-screen  overflow-hidden">
       {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar profile={patient} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
