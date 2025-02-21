@@ -1,351 +1,144 @@
-import React,{useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import DateSelect from "../components/Datepicker";
 import { useNavigate, useParams } from "react-router-dom";
+import Sidebar from "../partials/Sidebar";
+import Header from "../partials/Header";
+import { schedule } from "../data/patientdb";
+
+function updateScheduleStatus(item) {
+  const currentTime = new Date(); // Get current time
+  const currentDateTime =
+    currentTime.getHours() * 60 + currentTime.getMinutes(); // Current time in minutes
+
+  // Parse the start and end time from the "time" field
+  const [startTime, endTime] = item.time.split(" - ");
+  const [startHour, startMinute] = startTime.split(":");
+  const [endHour, endMinute] = endTime.split(":");
+
+  // Convert time to 24-hour format and minutes
+  const startTimeInMinutes =
+    ((parseInt(startHour) % 12) + (startTime.includes("PM") ? 12 : 0)) * 60 +
+    parseInt(startMinute);
+  const endTimeInMinutes =
+    ((parseInt(endHour) % 12) + (endTime.includes("PM") ? 12 : 0)) * 60 +
+    parseInt(endMinute);
+
+  // Check the time and update the status
+  if (currentDateTime < startTimeInMinutes) {
+    item.status = "Upcoming";
+  } else if (
+    currentDateTime >= startTimeInMinutes &&
+    currentDateTime <= endTimeInMinutes
+  ) {
+    item.status = "Progress";
+  } else {
+    item.status = "Completed";
+  }
+
+  return item;
+}
+
 function TimeTable() {
   const { id } = useParams();
   const numberofID = [15, 20, 16, 18];
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const updatedSchedule = schedule.map((item) => updateScheduleStatus(item));
 
   useEffect(() => {
     if (!numberofID.includes(parseInt(id))) {
-      navigate('/404');  // Redirect to the 404 page if ID is less than 7
+      navigate("/404"); // Redirect to the 404 page if ID is less than 7
     }
   }, [id, navigate]);
+
   return (
-    <section className="container mx-auto p-6 font-mono">
-      <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-        <div className="w-full overflow-x-auto">
-          <div className="border-b border-green-400 w-fit">
-            <span className="text-xl text-red-500">Select Date :</span> <div className=" inline-block"><DateSelect /></div>
+    <div className="flex h-screen  overflow-hidden">
+      {/* Sidebar */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+      {/* Content area */}
+      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+        {/*  Site header */}
+        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+        <main className="grow">
+          <div className="px-4 sm:px-0 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+            {/* Dashboard actions */}
+            <div className="sm:flex sm:justify-between sm:items-center mb-8">
+              {/* Left: Title */}
+              <div className="mb-4 sm:mb-0">
+                <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">
+                  Patient Schedule
+                </h1>
+              </div>
+            </div>
+
+            {/* Cards */}
+            <div className="grid grid-cols-12 gap-6 ">
+              <div className="col-span-12  flex justify-between p-1 sm:p-0 gap-1 sm:gap-x-0  text-xs text-center sm:text-xs lg:text-xl ">
+                <div className="w-full overflow-x-auto">
+                  <div className="border-b border-green-400 w-fit">
+                    <span className="text-sm md:text-xl text-red-500">Select Date :</span>{" "}
+                    <div className=" inline-block">
+                      <DateSelect />
+                    </div>
+                  </div>
+                  <table className="w-full bg-white">
+                    <thead>
+                      <tr className="text-sm md:text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                        <th className="px-4 py-3">Time</th>
+                        <th className="px-4 py-3"> Activity</th>
+                        <th className="px-4 py-3">Status</th>
+                        <th className="px-4 py-3">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                      {!updatedSchedule ? (
+                        <tr>
+                          <td colSpan="4" className="text-center">
+                            No schedule available
+                          </td>
+                        </tr>
+                      ) : (
+                        updatedSchedule.map((item, i) => (
+                          <tr key={i * 2} className="text-gray-700">
+                            <td className="px-4 py-3 sm:font-normal sm:text-xs md:font-semibold text-black border">
+                              {item.time}
+                            </td>
+                            <td className="px-4 py-3 text-ms font-semibold border">
+                              {item.activity}
+                            </td>
+                            <td className="px-4 py-3 text-xs border">
+                              <span
+                                className={`px-2 py-1 font-semibold leading-tight ${
+                                  item.status === "Progress"
+                                    ? "text-yellow-700 bg-yellow-100"
+                                    : item.status === "Upcoming"
+                                    ? "text-red-700 bg-red-100"
+                                    : "text-green-700 bg-green-100"
+                                } rounded-sm`}
+                              >
+                                {item.status}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-sm border">
+                              {item.description}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
-          <table className="w-full">
-            <thead>
-              <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                <th className="px-4 py-3">Time</th>
-                <th className="px-4 py-3"> Activity</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3">Details</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  7:00 AM - 7:30 AM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Breakfast
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">
-                  Nutritious meal provided
-                </td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  7:30 AM - 8:00 AM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Morning Medication
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">Administered by nurse</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  8:00 AM - 8:30 AM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Injection
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">
-                  Scheduled injection if required
-                </td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  8:30 AM - 9:30 AM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Lab Test</td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">
-                  Blood test / Urine test
-                </td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  9:30 AM - 10:00 AM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Rest</td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">Relaxation time</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  10:00 AM - 11:00 AM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">MRI Scan</td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">As per doctor's orders</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  11:00 AM - 11:30 AM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Snack</td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">Light snack provided</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  11:30 AM - 12:30 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Physical Therapy
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                    Completed
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">Exercises or walking</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  12:30 PM - 1:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Lunch</td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-sm">
-                    Progress
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">Balanced meal</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  1:00 PM - 2:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Rest</td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">Nap or quiet time</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  2:00 PM - 3:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Doctor Consultation
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm border">Follow-up or check-up</td>
-              </tr>
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  3:00 PM - 4:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Afternoon Medication
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-xs border">Administered by nurse</td>
-              </tr>
+        </main>
 
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  4:00 PM - 4:30 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Activity Time
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  Reading, puzzles, or socializing
-                </td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  4:30 PM - 5:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Evening Snack
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-xs border">Healthy snack</td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  5:00 PM - 5:30 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Evening Medication
-                </td>
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-xs border">Administered by nurse</td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  5:30 PM - 6:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Rest</td>
-
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 text-xs border">Relaxation time</td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  6:00 PM - 6:30 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Dinner</td>
-
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 text-xs border">
-                  Nutritious meal provided
-                </td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  6:30 PM - 7:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Evening Injection
-                </td>
-
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 text-xs border">
-                  Scheduled injection if required
-                </td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  7:00 PM - 8:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Light Activity / TV Time
-                </td>
-
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 text-xs border">
-                  Watching TV or light exercise
-                </td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  8:00 PM - 9:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">
-                  Night Medication
-                </td>
-
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 text-xs border">Administered by nurse</td>
-              </tr>
-
-              <tr className="text-gray-700">
-                <td className="px-4 py-3 font-semibold text-black border">
-                  9:00 PM - 10:00 PM
-                </td>
-                <td className="px-4 py-3 text-ms font-semibold border">Bedtime</td>
-
-                <td className="px-4 py-3 text-xs border">
-                  <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-sm">
-                    Upcomming
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 text-xs border">
-                  Wind down and sleep preparation
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {/* <Banner /> */}
       </div>
-    </section>
+    </div>
   );
 }
 

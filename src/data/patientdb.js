@@ -77,3 +77,132 @@ export const patientData = [
     respiratoryRate: { min: 12, max: 18 },
   },
 ];
+
+export const schedule = [
+  {
+    time: "7:00 AM - 7:30 AM",
+    activity: "Breakfast",
+    status: "Completed",
+    description: "Nutritious meal provided",
+  },
+  {
+    time: "7:30 AM - 8:00 AM",
+    activity: "Morning Medication",
+    status: "Completed",
+    description: "Administered by nurse",
+  },
+  {
+    time: "8:00 AM - 8:30 AM",
+    activity: "Injection",
+    status: "Completed",
+    description: "Scheduled injection if required",
+  },
+  {
+    time: "8:30 AM - 9:30 AM",
+    activity: "Lab Test",
+    status: "Completed",
+    description: "Blood test / Urine test",
+  },
+  {
+    time: "9:30 AM - 10:00 AM",
+    activity: "Rest",
+    status: "Completed",
+    description: "Relaxation time",
+  },
+  {
+    time: "10:00 AM - 11:00 AM",
+    activity: "MRI Scan",
+    status: "Completed",
+    description: "As per doctor's orders",
+  },
+  {
+    time: "11:00 AM - 11:30 AM",
+    activity: "Snack",
+    status: "Completed",
+    description: "Light snack provided",
+  },
+  {
+    time: "11:30 AM - 12:30 PM",
+    activity: "Physical Therapy",
+    status: "Completed",
+    description: "Exercises or walking",
+  },
+  {
+    time: "12:30 PM - 1:00 PM",
+    activity: "Lunch",
+    status: "Progress",
+    description: "Balanced meal",
+  },
+  {
+    time: "1:00 PM - 2:00 PM",
+    activity: "Rest",
+    status: "Upcoming",
+    description: "Nap or quiet time",
+  },
+  {
+    time: "2:00 PM - 3:00 PM",
+    activity: "Doctor Consultation",
+    status: "Upcoming",
+    description: "Follow-up or check-up",
+  },
+  {
+    time: "3:00 PM - 4:00 PM",
+    activity: "Afternoon Medication",
+    status: "Upcoming",
+    description: "Administered by nurse",
+  },
+  {
+    time: "4:00 PM - 4:30 PM",
+    activity: "Activity Time",
+    status: "Upcoming",
+    description: "Reading, puzzles, or socializing",
+  },
+  {
+    time: "4:30 PM - 5:00 PM",
+    activity: "Evening Snack",
+    status: "Upcoming",
+    description: "Healthy snack",
+  },
+  {
+    time: "5:00 PM - 5:30 PM",
+    activity: "Evening Medication",
+    status: "Upcoming",
+    description: "Administered by nurse",
+  },
+  {
+    time: "5:30 PM - 6:00 PM",
+    activity: "Rest",
+    status: "Upcoming",
+    description: "Relaxation time",
+  },
+  {
+    time: "6:00 PM - 6:30 PM",
+    activity: "Dinner",
+    status: "Upcoming",
+    description: "Nutritious meal provided",
+  },
+  {
+    time: "6:30 PM - 7:00 PM",
+    activity: "Evening Injection",
+    status: "Upcoming",
+    description: "Scheduled injection if required",
+  },
+  {
+    time: "7:00 PM - 8:00 PM",
+    activity: "Light Activity / TV Time",
+    status: "Upcoming",
+    description: "Watching TV or light exercise",
+  },
+  {
+    time: "8:00 PM - 9:00 PM",
+    activity: "Night Medication",
+    status: "Upcoming",
+    description: "Administered by nurse",
+  },
+  {
+    time: "9:00 PM - 10:00 PM",
+    activity: "Bedtime",
+    status: "Upcoming",
+    description: "Wind down and sleep preparation",
+  },
+];
