@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import { schedule } from "../data/patientdb";
+import { patientData } from "../data/patientdb";
 
 function updateScheduleStatus(item) {
   const currentTime = new Date(); // Get current time
@@ -45,7 +46,7 @@ function TimeTable() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const updatedSchedule = schedule.map((item) => updateScheduleStatus(item));
-
+ const patient = patientData.find((patient) => patient.id === parseInt(id));
   useEffect(() => {
     if (!numberofID.includes(parseInt(id))) {
       navigate("/404"); // Redirect to the 404 page if ID is less than 7
@@ -55,7 +56,7 @@ function TimeTable() {
   return (
     <div className="flex h-screen  overflow-hidden">
       {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar profile={patient} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
