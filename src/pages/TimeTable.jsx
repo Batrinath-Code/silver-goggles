@@ -1,6 +1,16 @@
-import React from "react";
+import React,{useEffect} from "react";
 import DateSelect from "../components/Datepicker";
+import { useNavigate, useParams } from "react-router-dom";
 function TimeTable() {
+  const { id } = useParams();
+  const numberofID = [15, 20, 16, 18];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!numberofID.includes(parseInt(id))) {
+      navigate('/404');  // Redirect to the 404 page if ID is less than 7
+    }
+  }, [id, navigate]);
   return (
     <section className="container mx-auto p-6 font-mono">
       <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
