@@ -11,6 +11,8 @@ import './charts/ChartjsConfig';
 
 // Import pages
 import Dashboard from './pages/Dashboard';
+import LandingPage from './pages/LandingPage';
+import TimeTable from './pages/TimeTable';
 
 function App() {
 
@@ -25,7 +27,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/" element={<LandingPage />} />
+        <Route exact path="/patient/:id" element={<LandingPage />} />
+        <Route exact path="/viewprogress" element={<Dashboard />} />
+        <Route exact path="/viewschedule" element={<TimeTable />} />
       </Routes>
     </>
   );

@@ -79,7 +79,7 @@ function Dashboard() {
 
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6 ">
-              <div className=" col-span-12 h-20 flex p-1 gap-1 text-[1.2rem] ">
+              <div className=" col-span-12 h-20 flex p-1 gap-1 text-xs text-center sm:text-xs lg:text-xl ">
                 <div
                   className=" flex w-[25%]  text-white bg-purple-500 rounded-xl dark:bg-gray-800 shadow-xs justify-center items-center"
                   onClick={() => setSelectedChart("bloodPressure")}
