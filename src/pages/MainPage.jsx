@@ -103,7 +103,7 @@ function MainPage() {
               Emergency Contact
             </h4>
             <p className="text-gray-600 font-semibold">Ph : 0987654321</p>
-            <p className="text-gray-600 font-semibold">Email : admin@doctor.com</p>
+            <p className="text-gray-600 font-semibold">Email : admin@apollo.com</p>
           </div>
         </div>
     </div>
