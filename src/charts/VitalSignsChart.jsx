@@ -57,6 +57,17 @@ const vitalSignsConfig = {
       critical_high: 24,
     },
   },
+  recovery: {
+    label: "Temperature Recovery",
+    unit: "°F",
+    color: "#3b82f6",
+    ranges: {
+      low: 97,
+      high: 99,
+      critical_low: 95,
+      critical_high: 103,
+    },
+  }
 };
 
 function VitalSignsChart({ type, width, height, data }) {
@@ -65,7 +76,6 @@ function VitalSignsChart({ type, width, height, data }) {
   const config = vitalSignsConfig[type];
   const chartInstance = useRef(null);
 
-  // Initialize Chart
   useEffect(() => {
     if (!canvas.current) return;
 
@@ -75,61 +85,84 @@ function VitalSignsChart({ type, width, height, data }) {
       chartInstance.current.destroy();
     }
 
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: "top",
+        },
+        tooltip: {
+          mode: "index",
+          intersect: false,
+          callbacks: {
+            label: (context) => `${context.dataset.label}: ${context.parsed.y} ${config.unit}`,
+          },
+        },
+      },
+      interaction: {
+        intersect: false,
+        mode: "nearest",
+      },
+      animation: {
+        duration: 750,
+      },
+    };
+
+    // Special configuration for recovery chart
+    if (type === "recovery") {
+      chartOptions.scales = {
+        y: {
+          suggestedMin: 97,
+          suggestedMax: 104,
+          grid: {
+            color: "rgba(0, 0, 0, 0.1)",
+          },
+          ticks: {
+            callback: (value) => `${value} ${config.unit}`,
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+      };
+    } else {
+      chartOptions.scales = {
+        y: {
+          suggestedMin: config.ranges.critical_low - 10,
+          suggestedMax: config.ranges.critical_high + 10,
+          grid: {
+            color: "rgba(0, 0, 0, 0.1)",
+          },
+          ticks: {
+            callback: (value) => `${value} ${config.unit}`,
+          },
+        },
+        x: {
+          type: "time",
+          time: {
+            unit: "minute",
+            displayFormats: {
+              minute: "HH:mm",
+            },
+          },
+          grid: {
+            display: false,
+          },
+        },
+      };
+    }
+
     chartInstance.current = new Chart(ctx, {
       type: "line",
       data: data,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            suggestedMin: config.ranges.critical_low - 10,
-            suggestedMax: config.ranges.critical_high + 10,
-            grid: {
-              color: "rgba(0, 0, 0, 0.1)",
-            },
-            ticks: {
-              callback: (value) => `${value} ${config.unit}`,
-            },
-          },
-          x: {
-            type: "time",
-            time: {
-              unit: "minute",
-              displayFormats: {
-                minute: "HH:mm",
-              },
-            },
-            grid: {
-              display: false,
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            display: true,
-            position: "top",
-          },
-          tooltip: {
-            mode: "index",
-            intersect: false,
-            callbacks: {
-              label: (context) => `${context.dataset.label}: ${context.parsed.y} ${config.unit}`,
-            },
-          },
-        },
-        interaction: {
-          intersect: false,
-          mode: "nearest",
-        },
-        animation: {
-          duration: 750,
-        },
-      },
+      options: chartOptions,
     });
-  }, [data, config]);
+  }, [data, config, type]);
 
-  // Update Value Display
   useEffect(() => {
     if (valueRef.current) {
       const lastValue = data.datasets[0].data[data.datasets[0].data.length - 1];

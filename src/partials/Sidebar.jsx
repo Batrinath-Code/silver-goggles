@@ -133,7 +133,7 @@ function Sidebar({
                   <li className=" my-1 mt-4">Blood : {profile.blood}</li>
                   <li className=" my-1 mt-4">Height : 177cm</li>
                   <li className=" my-1 mt-4">Weight : 96kg</li>
-                  <li className=" my-1 mt-4">Join Date: {"12-03-2025"}</li>
+                  <li className=" my-1 mt-4">Join Date: {"22-02-2025"}</li>
                   <li className=" my-1 mt-4">Doctor: {"Albert"}</li>
                   <li className=" my-1 mt-4">Diagnosis: {"Dengu Fever"}</li>
                 </ul>

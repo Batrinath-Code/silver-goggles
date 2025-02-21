@@ -15,8 +15,8 @@ export default function DatePickerWithRange({
   className,
 }) {
   const [date, setDate] = React.useState({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
+    from: new Date(2022, 0, 22),
+    to: addDays(new Date(2022, 0, 20), 2),
   })
 
   return (
@@ -35,7 +35,7 @@ export default function DatePickerWithRange({
               <path d="M5 4a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z"></path>
               <path d="M4 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4H4ZM2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Z"></path>
             </svg>
-            {date?.from ? (
+            {/* {date?.from ? (
               date.to ? (
                 <>
                   {format(date.from, "LLL dd, y")} -{" "}
@@ -46,7 +46,11 @@ export default function DatePickerWithRange({
               )
             ) : (
               <span>Pick a date</span>
-            )}
+            )} */}
+            {
+                format(date.from, "LLL dd, y")
+            }
+            
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">

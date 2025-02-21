@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import DateSelect from "../components/Datepicker";
+import DatePickerWithRange from "../components/Datepicker";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import { schedule } from "../data/patientdb";
-import { patientData } from "../data/patientdb";
+import { schedule,patientData } from "../data/patientdb";
 
 function updateScheduleStatus(item) {
   const currentTime = new Date(); // Get current time
@@ -75,7 +74,7 @@ function TimeTable() {
                 <h3 className="text-2xl  text-gray-800 dark:text-gray-100 font-bold">
                   Diagnoses : Dengu Fever
                   <br />
-                  Date Of Admitted : 12/Mar/2025
+                  Date Of Admitted : 22/Feb/2025
                 </h3>
               </div>
             </div>
@@ -89,7 +88,7 @@ function TimeTable() {
                       Select Date :
                     </span>{" "}
                     <div className=" inline-block">
-                      <DateSelect />
+                      <DatePickerWithRange />
                     </div>
                   </div>
                   <table className="w-full bg-white">

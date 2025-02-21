@@ -34,6 +34,7 @@ const vitalSignsConfig = {
       critical_low: 8,
       critical_high: 24,
     },
+    
   },
 };
 

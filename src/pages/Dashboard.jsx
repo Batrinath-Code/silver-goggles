@@ -31,6 +31,8 @@ const generateVitalSignData = (currentReading) => {
 
 
 
+
+
 function Dashboard({curentValue}) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -73,7 +75,7 @@ function Dashboard({curentValue}) {
                 <h3 className="text-2xl md:text-2xl text-gray-800 dark:text-gray-100 font-bold">
                   Diagnoses : Dengu Fever
                   <br />
-                  Date Of Admitted : 12/Mar/2025
+                  Date Of Admitted : 22/Feb/2025
                 </h3>
               </div>
 
@@ -125,12 +127,7 @@ function Dashboard({curentValue}) {
                 >
                   Current Respiratory
                 </div>
-                <div
-                  className=" flex w-[25%]  text-white bg-emerald-500 rounded-xl dark:bg-gray-800 shadow-xs justify-center items-center"
-                  onClick={() => setSelectedChart("respiratoryRate")}
-                >
-                  Recovery Status
-                </div>
+               
               </div>
 
               {selectedChart === "bloodPressure" && <BloodPressureDashboard />}
@@ -146,12 +143,6 @@ function Dashboard({curentValue}) {
                   realTimeValue={
                     Math.round((Math.random() * (99 - 97) + 97) * 10) / 10
                   }
-                />
-              )}
-              {selectedChart === "respiratoryRate" && (
-                <VitalDashboard
-                  chartData={generateVitalSignData(realTimeValue.respiratoryRate)}
-                  realTimeValue={Math.round(Math.random() * (20 - 12) + 12)}
                 />
               )}
               {selectedChart === "respiratoryRate" && (
