@@ -66,7 +66,7 @@ function Dashboard({curentValue}) {
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               {/* Left: Title */}
-              <div className="flex justify-between items-center mb-4   w-full">
+              <div className="flex justify-between items-center mb-4  w-full">
                 <h3 className="text-2xl md:text-2xl text-gray-800 dark:text-gray-100 font-bold">
                   Smart Room 101 - Marry Queen Schedule
                 </h3>
@@ -125,6 +125,12 @@ function Dashboard({curentValue}) {
                 >
                   Current Respiratory
                 </div>
+                <div
+                  className=" flex w-[25%]  text-white bg-emerald-500 rounded-xl dark:bg-gray-800 shadow-xs justify-center items-center"
+                  onClick={() => setSelectedChart("respiratoryRate")}
+                >
+                  Recovery Status
+                </div>
               </div>
 
               {selectedChart === "bloodPressure" && <BloodPressureDashboard />}
@@ -140,6 +146,12 @@ function Dashboard({curentValue}) {
                   realTimeValue={
                     Math.round((Math.random() * (99 - 97) + 97) * 10) / 10
                   }
+                />
+              )}
+              {selectedChart === "respiratoryRate" && (
+                <VitalDashboard
+                  chartData={generateVitalSignData(realTimeValue.respiratoryRate)}
+                  realTimeValue={Math.round(Math.random() * (20 - 12) + 12)}
                 />
               )}
               {selectedChart === "respiratoryRate" && (

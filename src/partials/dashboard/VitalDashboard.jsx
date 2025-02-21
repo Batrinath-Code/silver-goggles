@@ -40,6 +40,7 @@ const vitalSignsConfig = {
 function VitalDashboard({ chartData, realTimeValue }) {
   const [heartRateData, setHeartRateData] = useState(chartData);
 
+  console.log(heartRateData);
   
   // Calculate statistics for a given dataset
   const calculateStats = (data) => {
