@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState,useEffect } from "react";
+import { useParams,useNavigate } from "react-router-dom";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 
@@ -7,7 +7,7 @@ import { se } from "date-fns/locale";
 import BloodPressureDashboard from "../partials/dashboard/BloodPressureDashboard";
 import VitalDashboard from "../partials/dashboard/VitalDashboard";
 // Generate realistic sample data for each vital sign
-const generateVitalSignData = (type) => {
+const generateVitalSignData = (currentReading) => {
   const data = [];
   const now = new Date();
   const config = {
@@ -18,7 +18,7 @@ const generateVitalSignData = (type) => {
 
   for (let i = 0; i < 10; i++) {
     const timestamp = new Date(now - (10 - i) * 6 * 60 * 1000);
-    const range = config[type];
+    const range = currentReading;
     const value =
       Math.round((Math.random() * (range.max - range.min) + range.min) * 10) /
       10;
@@ -30,10 +30,25 @@ const generateVitalSignData = (type) => {
 
 
 
-function Dashboard() {
+function Dashboard({curentValue}) {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const numberofID =[15, 20, 16, 18];
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [selectedChart, setSelectedChart] = useState("bloodPressure");
+
+  const [realTimeValue, setRealTimeValue] = useState({ heartRate: { min: 65, max: 105 },
+    temperature: { min: 98.0, max: 99.5 },
+    respiratoryRate: { min: 14, max: 22 },});
+
+    useEffect(() => {
+      if (!numberofID.includes(parseInt(id))) {
+        navigate('/404');  // Redirect to the 404 page if ID is less than 7
+      }
+    }, [id, navigate]);
+    
 
   return (
     <div className="flex h-screen  overflow-hidden">
@@ -109,13 +124,13 @@ function Dashboard() {
               {selectedChart === "bloodPressure" && <BloodPressureDashboard />}
               {selectedChart === "heartRate" && (
                 <VitalDashboard
-                  chartData={generateVitalSignData("heartRate")}
+                  chartData={generateVitalSignData(realTimeValue.heartRate)}
                   realTimeValue={Math.round(Math.random() * (100 - 60) + 60)}
                 />
               )}
               {selectedChart === "temperature" && (
                 <VitalDashboard
-                  chartData={generateVitalSignData("temperature")}
+                  chartData={generateVitalSignData(realTimeValue.temperature)}
                   realTimeValue={
                     Math.round((Math.random() * (99 - 97) + 97) * 10) / 10
                   }
@@ -123,7 +138,7 @@ function Dashboard() {
               )}
               {selectedChart === "respiratoryRate" && (
                 <VitalDashboard
-                  chartData={generateVitalSignData("respiratoryRate")}
+                  chartData={generateVitalSignData(realTimeValue.respiratoryRate)}
                   realTimeValue={Math.round(Math.random() * (20 - 12) + 12)}
                 />
               )}

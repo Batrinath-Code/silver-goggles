@@ -13,6 +13,7 @@ import './charts/ChartjsConfig';
 import Dashboard from './pages/Dashboard';
 import LandingPage from './pages/LandingPage';
 import TimeTable from './pages/TimeTable';
+import NotFoundPage from './pages/404Page';
 
 function App() {
 
@@ -29,8 +30,11 @@ function App() {
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/patient/:id" element={<LandingPage />} />
-        <Route exact path="/viewprogress" element={<Dashboard />} />
-        <Route exact path="/viewschedule" element={<TimeTable />} />
+        <Route exact path="/progress/:id" element={<Dashboard />} />
+        <Route exact path="/schedule/:id" element={<TimeTable />} />
+
+         {/* Catch-all route for 404 (must be the last route) */}
+         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

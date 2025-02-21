@@ -4,7 +4,6 @@ import { patientData } from "../data/patientdb";
 
 function UserProfile({ id }) {
   const patient = patientData.find((patient)=> patient.id === parseInt(id));
-  console.log(patient);
   
   return (
     <>
@@ -85,13 +84,13 @@ function UserProfile({ id }) {
                 </div> */}
                 <div className="flex flex-wrap justify-center items-center gap-2">
                   <Link
-                    to="/viewprogress"
+                    to={`/progress/${id}`}
                     className=" flex w-[25%] py-2  text-white bg-purple-500 rounded-xl dark:bg-gray-800 shadow-xs justify-center items-center"
                   >
                     View Progress
                   </Link>
                   <Link
-                    to="/viewschedule"
+                    to={`/schedule/${id}`}
                     className=" flex w-[25%] py-2  text-white bg-red-500 rounded-xl dark:bg-gray-800 shadow-xs justify-center items-center"
                   >
                     View Schedule
