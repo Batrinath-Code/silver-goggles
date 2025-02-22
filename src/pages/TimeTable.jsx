@@ -3,7 +3,7 @@ import DatePickerWithRange from "../components/Datepicker";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import { schedule,patientData } from "../data/patientdb";
+import { schedule } from "../data/patientdb";
 
 function updateScheduleStatus(item) {
   const currentTime = new Date(); // Get current time
@@ -40,12 +40,11 @@ function updateScheduleStatus(item) {
 
 function TimeTable() {
   const { id } = useParams();
-  const numberofID = [15, 20, 16, 18];
+  const numberofID = [17, 19, 20, 18];
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const updatedSchedule = schedule.map((item) => updateScheduleStatus(item));
-  const patient = patientData.find((patient) => patient.id === parseInt(id));
   useEffect(() => {
     if (!numberofID.includes(parseInt(id))) {
       navigate("/404"); // Redirect to the 404 page if ID is less than 7

@@ -5,47 +5,23 @@ import Header from "../partials/Header";
 
 import { se } from "date-fns/locale";
 import BloodPressureDashboard from "../partials/dashboard/BloodPressureDashboard";
-import VitalDashboard from "../partials/dashboard/VitalDashboard";
 import { patientData } from "../data/patientdb";
 import HeartRateChartDashboard from "../partials/dashboard/HeartRateChartDashboard";
 import TemperatureDashboard from "../partials/dashboard/TemperatureDashboard";
 import RespiratoryDashboard from "../partials/dashboard/RespiratoryDashboard";
-// Generate realistic sample data for each vital sign
-const generateVitalSignData = (currentReading) => {
-  const data = [];
-  const now = new Date();
-  const config = {
-    heartRate: { min: 60, max: 100 },
-    temperature: { min: 97, max: 99 },
-    respiratoryRate: { min: 12, max: 20 },
-  };
+import RecoveryChartDashboard from "../partials/dashboard/RecoveryChartDashboard";
 
-  for (let i = 0; i < 10; i++) {
-    const timestamp = new Date(now - (10 - i) * 6 * 60 * 1000);
-    const range = currentReading;
-    const value =
-      Math.round((Math.random() * (range.max - range.min) + range.min) * 10) /
-      10;
-    data.push({ timestamp, value });
-  }
-
-  return data;
-};
 
 function Dashboard({ curentValue }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const numberofID = [15, 20, 16, 18];
+  const numberofID = [17, 19, 20, 18];
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const [selectedChart, setSelectedChart] = useState("bloodPressure");
 
-  const [realTimeValue, setRealTimeValue] = useState({
-    heartRate: { min: 65, max: 105 },
-    temperature: { min: 98.0, max: 99.5 },
-    respiratoryRate: { min: 14, max: 22 },
-  });
+ 
 
   useEffect(() => {
     if (!numberofID.includes(parseInt(id))) {
@@ -115,12 +91,19 @@ function Dashboard({ curentValue }) {
                 >
                   Current Respiratory
                 </div>
+                <div
+                  className=" flex w-[25%]  text-white bg-emerald-500 rounded-xl dark:bg-gray-800 shadow-xs justify-center items-center"
+                  onClick={() => setSelectedChart("patientrecovery")}
+                >
+                  Patient Recovery
+                </div>
               </div>
 
               {selectedChart === "bloodPressure" && <BloodPressureDashboard />}
               {selectedChart === "heartRate" && <HeartRateChartDashboard />}
               {selectedChart === "temperature" && <TemperatureDashboard />}
               {selectedChart === "respiratoryRate" && <RespiratoryDashboard />}
+              {selectedChart === "patientrecovery" && <RecoveryChartDashboard />}
             </div>
           </div>
         </main>
