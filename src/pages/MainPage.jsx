@@ -84,7 +84,7 @@ function MainPage() {
             <span className="text-lg font-semibold text-[#1A2B6B]">
               Date Of Admitted :
             </span>
-            <span className="text-lg text-[#0066FF]">22/Feb/2025</span>
+            <span className="text-lg text-[#0066FF]">22/02/2025</span>
           </div>
         </div>
 

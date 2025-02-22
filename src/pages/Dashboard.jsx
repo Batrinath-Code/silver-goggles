@@ -75,7 +75,7 @@ function Dashboard({curentValue}) {
                 <h3 className="text-2xl md:text-2xl text-gray-800 dark:text-gray-100 font-bold">
                   Diagnoses : Dengu Fever
                   <br />
-                  Date Of Admitted : 22/Feb/2025
+                  Date Of Admitted : 22/02/2025
                 </h3>
               </div>
 

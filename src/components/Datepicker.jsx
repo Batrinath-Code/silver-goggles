@@ -15,8 +15,8 @@ export default function DatePickerWithRange({
   className,
 }) {
   const [date, setDate] = React.useState({
-    from: new Date(2022, 0, 22),
-    to: addDays(new Date(2022, 0, 20), 2),
+    from: new Date(2022, 1, 22),
+    to: addDays(new Date(2022, 1, 20), 2),
   })
 
   return (
