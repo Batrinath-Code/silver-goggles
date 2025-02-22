@@ -38,10 +38,11 @@ const vitalSignsConfig = {
   },
 };
 
-function VitalDashboard({ chartData, realTimeValue }) {
+function VitalDashboard({ chartData, realTimeValue,label }) {
   const [heartRateData, setHeartRateData] = useState(chartData);
 
-  console.log(heartRateData);
+  console.log(chartData ,realTimeValue);
+  
   
   // Calculate statistics for a given dataset
   const calculateStats = (data) => {
@@ -76,7 +77,7 @@ function VitalDashboard({ chartData, realTimeValue }) {
     labels: heartRateData.map((reading) => new Date(reading.timestamp)),
     datasets: [
       {
-        label: vitalSignsConfig.heartRate.label,
+        label: label,
         data: heartRateData.map((reading) => reading.value),
         borderColor: vitalSignsConfig.heartRate.color,
         backgroundColor: `${vitalSignsConfig.heartRate.color}20`,

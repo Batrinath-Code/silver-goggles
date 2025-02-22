@@ -76,6 +76,8 @@ function VitalSignsChart({ type, width, height, data }) {
   const config = vitalSignsConfig[type];
   const chartInstance = useRef(null);
 
+  console.log();
+  
   useEffect(() => {
     if (!canvas.current) return;
 
@@ -191,7 +193,7 @@ function VitalSignsChart({ type, width, height, data }) {
   return (
     <div className="flex flex-col w-full bg-white rounded-xl shadow-lg">
       <div className="px-5 py-3 flex justify-between items-center border-b">
-        <h2 className="text-lg font-semibold text-gray-800">{config.label}</h2>
+        <h2 className="text-lg font-semibold text-gray-800">{data.datasets[0].label}</h2>
         <div>
           <span className="text-sm text-gray-500">Current Value</span>
           <div ref={valueRef} className="text-2xl font-bold text-green-600">

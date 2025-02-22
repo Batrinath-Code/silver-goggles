@@ -133,12 +133,14 @@ function Dashboard({curentValue}) {
               {selectedChart === "bloodPressure" && <BloodPressureDashboard />}
               {selectedChart === "heartRate" && (
                 <VitalDashboard
+                label={"Heart Rate"}
                   chartData={generateVitalSignData(realTimeValue.heartRate)}
                   realTimeValue={Math.round(Math.random() * (100 - 60) + 60)}
                 />
               )}
               {selectedChart === "temperature" && (
                 <VitalDashboard
+                label={"Temperature"}
                   chartData={generateVitalSignData(realTimeValue.temperature)}
                   realTimeValue={
                     Math.round((Math.random() * (99 - 97) + 97) * 10) / 10
@@ -147,6 +149,7 @@ function Dashboard({curentValue}) {
               )}
               {selectedChart === "respiratoryRate" && (
                 <VitalDashboard
+                label={"Respiratory Rate"}
                   chartData={generateVitalSignData(realTimeValue.respiratoryRate)}
                   realTimeValue={Math.round(Math.random() * (20 - 12) + 12)}
                 />
