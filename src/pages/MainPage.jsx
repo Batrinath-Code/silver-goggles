@@ -10,23 +10,23 @@ function MainPage() {
     },
   ];
   return (
-    <div className="min-h-screen bg-[#F5F8FF] p-4">
+    <div className="flex flex-col min-h-screen bg-[#F5F8FF] p-4 ">
       {/* Header Logo */}
-      <div className="mb-8 flex items-center gap-2">
+      <div className="mb-3 flex items-center gap-2 ">
         <img
-          src={logo}
+          src={widezolog}
           alt="Mezoi Logo"
-          width={40}
-          height={40}
-          className="h-10 w-10"
+          width={60}
+          height={60}
+          className="h-10 w-40"
         />
-        <span className="text-2xl font-bold text-[#1A2B6B]">Mezoi</span>
+        {/* <span className="text-2xl font-bold text-[#1A2B6B]">Mezoi</span> */}
       </div>
 
       {/* Main Card */}
-      <div className="mx-auto max-w-3xl rounded-3xl bg-white p-8 shadow-lg">
+      <div className="mx-auto max-w-3xl  rounded-3xl bg-white p-4 px-6  xl:p-8 shadow-lg ">
         {/* Center Logo */}
-        <div className="mb-6 flex justify-center">
+        <div className="mb-4 md:mb-3 xl:mb-6 flex justify-center">
           <div className="flex items-center gap-2">
             <img
               src={logo}
@@ -40,12 +40,12 @@ function MainPage() {
         </div>
 
         {/* Heading */}
-        <h1 className="mb-8 text-center text-3xl font-bold text-[#1A2B6B]">
+        <h1 className="mb-4 xl:mb-8 text-center text-3xl font-bold text-[#1A2B6B]">
           Smart Companion for Seamless Patient Care
         </h1>
 
         {/* Welcome Section */}
-        <div className="mb-6 text-center">
+        <div className="mb-3 xl:mb-6 text-center">
           <h2 className="mb-4 text-4xl font-bold text-[#1A2B6B]">
             Welcome To <span className="text-[#0066FF]">Marry</span>
           </h2>
@@ -91,7 +91,7 @@ function MainPage() {
     
       </div>
           {/* Footer */}
-          <div className="flex items-center justify-between w-11/12 mx-auto mt-8">
+          <div className="flex items-center justify-between w-11/12 mx-auto mt-3 xl:mt-8 ">
           <div className="flex flex-col items-center gap-2">
             <span className="text-lg">A product from</span>
            <img src={widezolog} alt="widezo logo" />
